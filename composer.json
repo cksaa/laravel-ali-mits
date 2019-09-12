@@ -1,0 +1,26 @@
+{
+    "name": "cksaa\/laravel-ali-mts",
+    "description": "阿里云mts SDK 封装",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "carlcheng",
+            "email": "carlcheng131@gmail.com"
+        }
+    ],
+    "require": {
+        "alibabacloud/mts": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cksaa\\LaravelAliMts\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cksaa\\LaravelAliMts\\MtsServiceProvider"
+            ]
+        }
+    }
+}
