@@ -113,7 +113,7 @@ class Mts
     {
         $action = 'SubmitMediaInfoJob';
 
-        $this->input($file);
+        $this->setInput($file);
 
         $params = ['Input' => $this->input];
 
