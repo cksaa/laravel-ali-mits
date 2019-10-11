@@ -89,6 +89,12 @@ class Mts
 
         $data = $response['data']['SnapshotJobList']['SnapshotJob'][0];
 
+        //截图未完成
+        if($data['State'] != 'Success'){
+            $response['state'] = false;
+            return $response;
+        }
+
         $outputFile = $data['SnapshotConfig']['OutputFile'];
         $outputFile['Object'] = urldecode($outputFile['Object']);
 
@@ -103,7 +109,7 @@ class Mts
     }
 
     /**
-     * 提交转码作业 https://help.aliyun.com/document_detail/29232.html
+     * 提交截图作业 https://help.aliyun.com/document_detail/29232.html
      * @param string $file 输入文件路径
      * @param string $snapshotConfig 截图配置
      * @param string $userData 用户自定义数据
@@ -124,8 +130,10 @@ class Mts
         if(! empty($userData)){
             $params['UserData'] = $userData;
         }
-        if(! empty($userData)){
-            $params['PipelineId'] = $pipelineId;
+
+        $params['PipelineId'] = $pipelineId;
+        if(empty($pipelineId)){
+            $params['PipelineId'] = config('mts.pipeline_id');
         }
 
         return $this->sendRequest($action, $params);
