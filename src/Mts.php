@@ -2,7 +2,6 @@
 
 namespace Cksaa\LaravelAliMts;
 
-use function Couchbase\defaultDecoder;
 use Illuminate\Http\Request;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
@@ -101,6 +100,35 @@ class Mts
         }
 
         return ['state' => true, 'data' => $outputFiles];
+    }
+
+    /**
+     * 提交转码作业 https://help.aliyun.com/document_detail/29232.html
+     * @param string $file 输入文件路径
+     * @param string $snapshotConfig 截图配置
+     * @param string $userData 用户自定义数据
+     * @param null string $pipelineId 管道id
+     * @return array
+     */
+    public function submitSnapshotJob($file, $snapshotConfig, $userData, $pipelineId = null)
+    {
+        $action = 'SubmitSnapshotJob';
+
+        $this->setInput($file);
+
+        $params = [
+            'Input' => $this->input,
+            'SnapshotConfig' => $snapshotConfig,
+        ];
+
+        if(! empty($userData)){
+            $params['UserData'] = $userData;
+        }
+        if(! empty($userData)){
+            $params['PipelineId'] = $pipelineId;
+        }
+
+        return $this->sendRequest($action, $params);
     }
 
     /**
