@@ -61,6 +61,33 @@ class Mts
     }
 
     /**
+     * 提交媒体审核作业 https://help.aliyun.com/document_detail/91774.html
+     * @param $file
+     * @param $censorConfig
+     * @param null $title
+     * @param null $description
+     * @param null $userData
+     * @return array
+     */
+    public function submitMediaCensorJob($file, $censorConfig, $title = null, $description = null, $userData = null)
+    {
+        $action = 'SubmitMediaCensorJob';
+
+        $this->setInput($file);
+
+        $params = [
+            'Input' => $this->input,
+            'VideoCensorConfig' => $censorConfig,
+            'PipelineId' => config('mts.censor_pipeline_id'),
+            'Title' => $title,
+            'Description' => $description,
+            'UserData' => $userData
+        ];
+
+        return $this->sendRequest($action, $params);
+    }
+
+    /**
      * 查询转码作业 https://help.aliyun.com/document_detail/29228.html
      * @param $jobIds
      * @return array

@@ -7,6 +7,7 @@ return [
     "output_bucket" => env("OSS_BUCKET"),
     "oss_location" => env("OSS_LOCATION", 'oss-cn-hangzhou'),
     "pipeline_id" => env("PIPELINE_ID", null),
+    "censor_pipeline_id" => env("CENSOR_PIPELINE_ID", null),
     "transcode" => [
         "2k" => env('2k_template_id'),
         "4k" => env('4k_template_id'),
